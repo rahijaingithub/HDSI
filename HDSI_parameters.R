@@ -27,6 +27,51 @@ HDSI_para_control = function(interactions=T, int_term=2, intercept=T, out_type="
   return(para)
 }
 
+#' @export
+HDSI_formula_gen = function(other_para=para){
+  #str(other_para)
+  # Define the tuning parameters
+  interactionterm= other_para['interactions']
+  int_term= as.numeric(other_para['int_term'])
+  output=other_para['out_type']
+  #str(other_para)
+  if(output=="survival"){y="survival::Surv(time,status)"}else{y="y"}
+
+  # Define the input and output predictors
+  if(interactionterm==T){
+    if(int_term==3){ f=stats::as.formula(paste(y," ~ .*.*.")) }else{ f=stats::as.formula(paste(y," ~ .*.")) }
+  }else{f=stats::as.formula(paste(y," ~ ."))}
+  return(f)
+}
+
+#' @export
+df_creator = function(covariate, df, f, outcome="y"){
+  if(all(covariate %in% 1) | is.na(covariate)){
+    Matrix=stats::model.matrix(f,df)[,-1]
+    df[,colnames(Matrix)]=list()
+    df[,colnames(Matrix)]=Matrix
+  }else{
+    no_covariate=setdiff(names(df), covariate)
+
+    df_no_covariate=df[,no_covariate]
+    Matrix=stats::model.matrix(f,df_no_covariate)[,-1]
+
+    no_covariate_no_outcome=setdiff(no_covariate, outcome)
+    df[,no_covariate_no_outcome]=list() # to account for categoricals
+
+    df[,colnames(Matrix)]=list()
+    df[,colnames(Matrix)]=Matrix
+  }
+  return(list(mat=Matrix, newdf=df))
+}
+
+#' @export
+var_organise = function(inputlist, symbol="_"){
+  org_var=lapply(inputlist, function(x) {
+    a=strsplit(x, symbol);
+    ifelse(length(a[[1]])>1, paste0(naturalsort::naturalsort(a[[1]]),collapse = symbol), a[[1]])})
+  return(unlist(org_var))
+}
 #Summarize the result of each bootstrap
 #' @export
 f_summary_rsquare=function(x, cint=0.95, min_max=c("ci", "quartile", "min", "only_min")){
