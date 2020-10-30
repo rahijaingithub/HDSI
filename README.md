@@ -3,9 +3,9 @@ High Dimensional Selection with Interactions (HDSI) Algorithm perform featue sel
 
 In order to use HDSI, it needs to be installed in R. 
 ```R
-install.packages("githubinstall") # In case githubinstall is installed
-library(githubinstall)
-githubinstall("HDSI")
+# install.packages("githubinstall") # In case githubinstall is installed
+# library(githubinstall)
+# githubinstall("HDSI")
 library(HDSI)
 ```
 Once the HDSI is installed. The first step is to generate a dataset. The `dataset()` function generate the artificial dataset. It needs four inputs.<br />
