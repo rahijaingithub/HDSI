@@ -30,7 +30,8 @@ sm_para = HDSI_para_control(interactions=T, # Should model consider interaction 
 
 res = HDSI_model(model="lasso", # To select the base statistical model. Options are c("lasso", "alasso", "reg") 
                  inputdf=df,  # Input the data dataset containing input features and outcome variable. 
-                 covariate=c(1), 
+                 covariate=c(1), # Fixes the covariate in the model (Control). 
+                                 # The selected covariate interaction terms are not considered and is present in all statistical models.
                  outvar="y", # Name of the outcome variable in the dataset. Currently, outcome variable name must be "y". 
                              # Plan is to make it flexible in future updates.
                  seed=1, # an integer value to create replicable randomness.
