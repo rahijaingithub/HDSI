@@ -90,7 +90,7 @@ bootsample_continuous=function(boots=boots, features, rows, k, seed_multiplier=1
   res=lapply(1:boots, function(x) {
     set.seed(x*seed_multiplier)
     ### Create variable combinations
-    random.features <- sample(features, k, replace = FALSE) # replaced samples with features/3
+    random.features <- sample(features, k, replace = FALSE)
     feature <- naturalsort::naturalsort(random.features)
     ## Create Sample list for each bootstrap
     random.samples=sample(rownames(inputdf), nrow(inputdf), replace=bootstrap)
@@ -110,7 +110,7 @@ bootsample_survival=function(boots=boots, features, rows, k, seed_multiplier=1, 
     #print(x*seed_multiplier)
     set.seed(x*seed_multiplier)
     ### Create variable combinations
-    random.features <- sample(features, k, replace = FALSE) # replaced samples with features/3
+    random.features <- sample(features, k, replace = FALSE)
     #print(random.features)
     feature=naturalsort::naturalsort(random.features)
 
